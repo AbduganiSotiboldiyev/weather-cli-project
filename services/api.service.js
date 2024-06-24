@@ -40,7 +40,7 @@ const {data} =    await axios.get('https://api.openweathermap.org/data/2.5/weath
         units: 'metric'
     }
 })
-console.log(data)
+
 return data
 
 // -----------------2 way ----------------------------------
