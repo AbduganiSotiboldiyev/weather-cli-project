@@ -7,11 +7,10 @@ const getWeather = async (city) => {
     // https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
 
     // https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
-    const token = await getKeyValue(TOKEN_DIC.token)
-    console.log(token)
-    // if(!token) {
-    //     throw new Error('No token found')
-    // }
+    const token = process.env.TOKEN ?? ( await getKeyValue(TOKEN_DIC.token))
+    if(!token) {
+        throw new Error('No token found')
+    }
 
     // -------------1 way -------------------------------------
     // const url = new URL("https://api.openweathermap.org/data/2.5/weather?q=Tashkent&appid=8a8ba139e3ce9c07ed0d771227424f19")
@@ -33,7 +32,7 @@ const getWeather = async (city) => {
 // -------------1 way -------------------------------------
 // -----------------2 way  with axios----------------------------------
 
-const response =  await axios.get('https://api.openweathermap.org/data/2.5/weather' , {
+const {data} =    await axios.get('https://api.openweathermap.org/data/2.5/weather' , {
     params: {
         q: city,
         appid: token,
@@ -41,8 +40,8 @@ const response =  await axios.get('https://api.openweathermap.org/data/2.5/weath
         units: 'metric'
     }
 })
-
-console.log(response)
+console.log(data)
+return data
 
 // -----------------2 way ----------------------------------
 
